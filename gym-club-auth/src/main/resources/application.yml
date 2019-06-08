@@ -1,0 +1,103 @@
+jwt:
+  expiration: 604800
+  secret: xmJwtSecret
+  tokenHead: 'Bearer '
+  tokenHeader: Authorization
+
+mybatis:
+  mapper-locations:
+    - classpath:mybatis/mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  port: 8082
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: 123456
+    username: test
+    url: jdbc:mysql://localhost:3306/spring_test?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          auto: update
+    # 解决 SQLSyntaxErrorException 错误：ddl 建表语句 ) type=MyISAM" via JDBC Statement，
+    # type=MyISAM 在4.x 被提示过时， Mysql 5.5 被移除，
+    # 详见 https://stackoverflow.com/questions/43716068/invalid-syntax-error-type-myisam-in-ddl-generated-by-hibernate
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  redis:
+    database: 0
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+      shutdown-timeout: 100ms
+    password: ''
+    port: 6379
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: de87e995aa6c1c726646
+            client-secret: 5e0aadf8a2b9203e318fc2b4e938862d255efbea
+            client-name: Auth with Github
+            scope: read:user
+            provider: github
+            redirect-uri-template: '{baseUrl}/login/oauth2/code/{registrationId}'
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+            user-info-attribute: info
+github:
+  #client:
+  clientId: de87e995aa6c1c726646
+  clientSecret: 5e0aadf8a2b9203e318fc2b4e938862d255efbea
+  accessTokenUri: https://github.com/login/oauth/access_token
+  userAuthorizationUri: https://github.com/login/oauth/authorize
+  clientAuthenticationScheme: form
+  registeredRedirectUri: http://127.0.0.1:8081/auth/oauth2/code/github
+  authorities: READ
+  authorizedGrantTypes: authorization_code
+  scope: read:user
+xm-resource:
+  userInfoUri: https://api.github.com/user
+front-end:
+  social-bind-url: http://127.0.0.1:8088/#/register
+  login-success-redirect-uri: http://127.0.0.1:8088/#/login
+
+gymclub:
+  security:
+    oauth2-token:
+      storeType: redis
+      signingKey: xming
+    oauth2:
+      github:
+        provider-id: github
+        client-id: de87e995aa6c1c726646
+        client-secret: 5e0aadf8a2b9203e318fc2b4e938862d255efbea
+        authorization-uri: https://github.com/login/oauth/authorize
+        token-uri: https://github.com/login/oauth/access_token
+    social:
+      register-url: /signup/social
+      filter-processes-url: /auth/social
+      bind-url: /social/bind
+      callback-url: /auth/social
+      connect-url: /connect

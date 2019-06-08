@@ -1,0 +1,4 @@
+rootProject.name = 'gym-club-web-flux'
+include 'gym-club-api'
+include 'gym-club-auth'
+
