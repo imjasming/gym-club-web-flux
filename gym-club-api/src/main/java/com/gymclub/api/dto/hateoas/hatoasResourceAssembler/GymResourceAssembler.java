@@ -1,7 +1,7 @@
 package com.gymclub.api.dto.hateoas.hatoasResourceAssembler;
 
-import com.gymclub.api.controller.HateoasController;
-import com.gymclub.api.domain.primary.Gym;
+import com.gymclub.api.controller.HateoasHandler;
+import com.gymclub.api.domain.Gym;
 import com.gymclub.api.dto.hateoas.GymResource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
@@ -9,7 +9,7 @@ public class GymResourceAssembler extends ResourceAssemblerSupport<Gym, GymResou
 
     public GymResourceAssembler()
     {
-        super(HateoasController.class, GymResource.class);
+        super(HateoasHandler.class, GymResource.class);
     }
 
     @Override

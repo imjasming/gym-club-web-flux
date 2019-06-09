@@ -1,18 +1,16 @@
-package com.gymclub.api.domain.primary;
+package com.gymclub.api.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
 
-@Entity
 @Data
+@Document
 public class Gym implements Serializable {
 
     @Id
-    @GeneratedValue
     private Integer id;
     private String gymName;
     private String location;

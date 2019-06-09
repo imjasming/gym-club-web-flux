@@ -1,6 +1,7 @@
 package com.gymclub.auth.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class AuthController {
      * @return oauth client list
      */
     @GetMapping("/oauth2-client")
-    public ResponseEntity getOauth2Client(HttpServletRequest request) {
+    public ResponseEntity getOauth2Client(ServerRequest request) {
         /*Iterable<ClientRegistration> clientRegistrations = null;
         ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository).as(Iterable.class);
         if (type != ResolvableType.NONE && ClientRegistration.class.isAssignableFrom(type.resolveGenerics()[0])) {
@@ -62,8 +62,11 @@ public class AuthController {
             data.add(client);
         });*/
 
-        StringBuffer url = request.getRequestURL();
-        url.delete(url.length() - request.getRequestURI().length(), url.length());
+        StringBuffer url = new StringBuffer()
+                //request.getRequestURL()
+                ;
+        url.append("http://127.0.0.1:8082");
+        //url.delete(url.length() - request.getRequestURI().length(), url.length());
         Map<String, String> client = new HashMap<>();
         client.put("clientName", "Auth with Github");
         client.put("clientUrl", url.append(oauthUrl).append("/github").toString());

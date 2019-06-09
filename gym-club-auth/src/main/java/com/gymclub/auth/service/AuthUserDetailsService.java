@@ -31,7 +31,7 @@ public class AuthUserDetailsService implements UserDetailsService, SocialUserDet
     }
 
     private UserDetails getUserByIdentify(String id) {
-        UmUser user = userRepository.findByUsername(id);
+        UmUser user = userRepository.findByUsername(id).block();
         if (user == null) {
             throw new UsernameNotFoundException("用户名错误");
         } else {

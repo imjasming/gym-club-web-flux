@@ -1,7 +1,7 @@
 package com.gymclub.api.service;
 
 
-import com.gymclub.api.domain.primary.UmUser;
+import com.gymclub.api.domain.UmUser;
 import com.gymclub.api.dto.GithubAuthServiceResult;
 
 /**

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +59,7 @@ public class UserSignUpController {
      * @throws IOException
      */
     @GetMapping("/signup/social")
-    public void socialSignUp(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void socialSignUp(ServerRequest request, ServerResponse response) throws IOException {
         String uuid = UUID.randomUUID().toString();
         Connection<?> connectionFromSession = providerSignInUtils.getConnectionFromSession(new ServletWebRequest(request));
         socialConnectRedisHelper.saveConnectionData(uuid, connectionFromSession.createData());

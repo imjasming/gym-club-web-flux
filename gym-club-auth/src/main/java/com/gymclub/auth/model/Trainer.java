@@ -2,18 +2,14 @@ package com.gymclub.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 @Data
-@Entity
 public class Trainer implements Serializable {
-    @GeneratedValue
     @Id
     private Integer id;
 
@@ -25,13 +21,9 @@ public class Trainer implements Serializable {
     private double salary;
     private String intro;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "trainers")
-    @Fetch(FetchMode.SUBSELECT)
     @JsonIgnoreProperties(ignoreUnknown = true, value = {"trainers"})
     private List<UmUser> users = new LinkedList<>();
 
-    @JoinColumn(name = "GYM_ID")
-    @ManyToOne(cascade = {CascadeType.MERGE})
     private Gym gym;
 
     public Trainer() {

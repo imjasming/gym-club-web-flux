@@ -1,6 +1,6 @@
 package com.gymclub.auth.model;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 
 
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * Description :
  */
 @Repository
-public interface OAuthClientRepository extends JpaRepository<OauthClient, String> {
+public interface OAuthClientRepository extends ReactiveMongoRepository<OauthClient, String> {
     OauthClient findByClientId(String clientId);
 }

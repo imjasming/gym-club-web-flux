@@ -1,9 +1,9 @@
-package com.gymclub.api.domain.secondary;
+package com.gymclub.api.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,7 +12,7 @@ import java.util.Date;
  * Created on 2019/04/18 17:44.
  */
 @Data
-@Entity
+@Document
 public class UserInfo implements Serializable {
     private Integer id;
 

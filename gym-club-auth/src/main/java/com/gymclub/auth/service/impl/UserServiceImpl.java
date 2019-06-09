@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         newUser.setLastPasswordReset(new Date());
         newUser.setEnable(true);
 
-        if (!roleRepository.existsById(1)) {
+        if (!roleRepository.existsById(1).block()) {
             Role role1 = new Role(Role.RoleName.ROLE_USER);
             Role role2 = new Role(Role.RoleName.ROLE_ADMIN);
             roleRepository.save(role1);

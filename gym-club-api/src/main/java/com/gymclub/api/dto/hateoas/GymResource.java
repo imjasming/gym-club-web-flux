@@ -1,6 +1,6 @@
 package com.gymclub.api.dto.hateoas;
 
-import com.gymclub.api.domain.primary.Gym;
+import com.gymclub.api.domain.Gym;
 import org.springframework.hateoas.ResourceSupport;
 
 public class GymResource extends ResourceSupport {

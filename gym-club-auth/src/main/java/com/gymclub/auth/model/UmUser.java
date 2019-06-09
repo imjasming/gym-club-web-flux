@@ -3,10 +3,8 @@ package com.gymclub.auth.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
@@ -19,29 +17,22 @@ import java.util.List;
  * 结论：mybatis
  */
 
-@Entity
 @Data
 public class UmUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 50)
     private String username;
 
     @JsonIgnore
-    @Column(length = 128)
     private String password;
 
-    @Column(unique = true)
     private String email;
 
     private String nickname;
 
-    @Column
     private Date lastPasswordReset;
 
     @JsonIgnore
@@ -49,17 +40,9 @@ public class UmUser implements Serializable {
 
     private String intro;
 
-    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "uid", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "rid", referencedColumnName = "id")})
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
     @JsonIgnoreProperties(ignoreUnknown = true, value = {"users"})
     private List<Role> roles = new LinkedList<>();
 
-    @JoinTable(name = "user_trainer_relation", joinColumns = {@JoinColumn(name = "uid", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "tid", referencedColumnName = "id")})
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // 巨TMD坑
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

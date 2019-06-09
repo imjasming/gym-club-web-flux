@@ -1,19 +1,17 @@
-package com.gymclub.api.domain.primary;
+package com.gymclub.api.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 @Data
-@Entity
+@Document
 public class Trainer implements Serializable {
-    @GeneratedValue
     @Id
     private Integer id;
 
@@ -25,14 +23,8 @@ public class Trainer implements Serializable {
     private double salary;
     private String intro;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "trainers")
-    @Fetch(FetchMode.SUBSELECT)
     @JsonIgnoreProperties(ignoreUnknown = true, value = {"trainers"})
     private List<UmUser> users = new LinkedList<>();
-
-    @JoinColumn(name = "GYM_ID")
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    private Gym gym;
 
     public Trainer() {
     }
@@ -49,7 +41,6 @@ public class Trainer implements Serializable {
                 ", salary=" + salary +
                 ", intro='" + intro + '\'' +
                 ", users=" + users +
-                ", gym=" + gym +
                 '}';
     }
 }

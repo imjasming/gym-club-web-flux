@@ -19,6 +19,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.util.UrlPathHelper;
 
 import javax.inject.Inject;
@@ -126,9 +127,8 @@ public class ConnectController implements InitializingBean {
      * @return
      */
     @PostMapping(value = {"/{providerId}"})
-    public ResponseEntity<?> connect(@PathVariable String providerId, NativeWebRequest request) {
-        HttpServletRequest nativeRequest = request.getNativeRequest(HttpServletRequest.class);
-        Principal user = nativeRequest.getUserPrincipal();
+    public ResponseEntity<?> connect(@PathVariable String providerId, ServerRequest request) {
+        Principal user = request.principal();
         ConnectionFactory<?> connectionFactory = this.connectionFactoryLocator.getConnectionFactory(providerId);
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap();
         this.preConnect(connectionFactory, parameters, request);

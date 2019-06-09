@@ -1,7 +1,10 @@
-package com.gymclub.auth.model;
+package com.gymclub.api.repository;
 
+
+import com.gymclub.api.domain.Equipment;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Xiaoming.
@@ -10,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * CRUD refers Create, Read, Update, Delete
  */
 @Repository
-public interface RoleRepository extends ReactiveMongoRepository<Role, Integer> {
+public interface EquipmentRepository extends ReactiveMongoRepository<Equipment, Integer> {
 
-    Role findByName(Role.RoleName rname);
+    Mono<Equipment> findByEName(String eName);
 }
