@@ -1,4 +1,4 @@
-package com.gymclub.api.controller;
+package com.gymclub.api.util;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.server.ServerRequest;

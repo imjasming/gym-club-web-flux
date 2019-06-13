@@ -10,7 +10,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import static com.gymclub.api.controller.RequestUtil.parseIntParam;
+import static com.gymclub.api.util.RequestUtil.parseIntParam;
 
 /**
  * @author Xiaoming.

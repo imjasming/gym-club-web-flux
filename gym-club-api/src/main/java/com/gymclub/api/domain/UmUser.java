@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -41,12 +42,14 @@ public class UmUser implements Serializable {
     private String intro;
 
     @JsonIgnoreProperties(ignoreUnknown = true, value = {"users"})
+    @DBRef
     private List<Role> roles = new LinkedList<>();
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // 巨TMD坑
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @JsonIgnoreProperties(ignoreUnknown = true, value = {"users"})
+    @DBRef
     private List<Trainer> trainers = new LinkedList<>();
 
     public UmUser() {
@@ -64,8 +67,8 @@ public class UmUser implements Serializable {
         this.email = email;
     }
 
-    public void setRoles(List<Role> roles) {
+    /*public void setRoles(List<Role> roles) {
         roles.forEach(item -> item.getUsers().add(this));
         this.roles.addAll(roles);
-    }
+    }*/
 }

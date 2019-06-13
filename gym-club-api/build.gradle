@@ -11,6 +11,13 @@ dependencies {
     // https://mvnrepository.com/artifact/org.aspectj/aspectjrt
     implementation 'org.aspectj:aspectjrt:1.9.2'
 
+    // security
+    implementation('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
+    implementation('org.springframework.security:spring-security-oauth2-core:5.1.4.RELEASE')
+    implementation('org.springframework.security:spring-security-oauth2-client:5.1.4.RELEASE')
+    implementation('org.springframework.security:spring-security-oauth2-jose:5.1.4.RELEASE')
+
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     // reactive components
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
