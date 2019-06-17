@@ -1,9 +1,6 @@
 package com.gymclub.api.router;
 
-import com.gymclub.api.controller.GymHandler;
-import com.gymclub.api.controller.HateoasHandler;
-import com.gymclub.api.controller.TrainerHandler;
-import com.gymclub.api.controller.UserInfoHandler;
+import com.gymclub.api.controller.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -16,6 +13,12 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  */
 @Configuration
 public class Routers {
+    @Bean
+    public RouterFunction<ServerResponse> signUp(UserSignUpHandler handler) {
+        return RouterFunctions.route()
+                .POST("/register", handler::signUp).build();
+    }
+
     @Bean
     public RouterFunction<ServerResponse> gymRoute(GymHandler handler) {
         return RouterFunctions.route().GET("/gyms", handler::getGymList).build();

@@ -26,10 +26,7 @@ public class HateoasHandler {
     private static final String TEMPLATE = "Hello, %s!";
 
     @RateLimitAspect(permitsPerSecond = 1)
-    //@RequestMapping("/greeting")
-    public Mono<ServerResponse> greeting(
-            /*@RequestParam(value = "name", required = false, defaultValue = "World") String name*/
-            ServerRequest request) {
+    public Mono<ServerResponse> greeting(ServerRequest request) {
         String name = request.queryParam("name").isPresent() ? request.queryParam("name").get() : "World";
         Greeting greeting = new Greeting(String.format(TEMPLATE, name));
         greeting.add(linkTo(methodOn(HateoasHandler.class).greeting(request)).withSelfRel());

@@ -1,7 +1,6 @@
 package com.gymclub.api.controller;
 
 import com.gymclub.api.domain.Gym;
-import com.gymclub.api.dto.PageParam;
 import com.gymclub.api.repository.GymRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,14 +25,7 @@ public class GymHandler {
     }
 
     @ApiOperation("in home page, list gyms info")
-    //@GetMapping("/gym-list")
-    public Mono<ServerResponse> getGymList(
-            /*@RequestParam("pageSize") int pageSize,
-            @RequestParam("pageNo") int pageNo*/
-            ServerRequest request) {
-
-        Mono<PageParam> pageParamMono = request.bodyToMono(PageParam.class);
-
+    public Mono<ServerResponse> getGymList(ServerRequest request) {
         final int pageNo = parseIntParam(request, "pageNo");
         final int pageSize = parseIntParam(request, "pageSize");
         return ServerResponse.ok().body(gymRepository.findAll().skip(pageNo * pageSize).take(pageSize), Gym.class);

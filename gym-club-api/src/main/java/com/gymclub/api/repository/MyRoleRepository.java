@@ -16,4 +16,5 @@ import reactor.core.publisher.Mono;
 public interface MyRoleRepository extends ReactiveMongoRepository<Role, Integer>{
 
     Mono<Role> findByName(Role.RoleName rname);
+    boolean existsRoleById(Integer id);
 }

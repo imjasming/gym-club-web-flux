@@ -32,7 +32,7 @@ public class Swagger2Config {
         return new ApiInfoBuilder()
                 .title("Gym Club")
                 .description("Gym club")
-                .version("1.0")
+                .version("1.2")
                 .build();
     }
 }

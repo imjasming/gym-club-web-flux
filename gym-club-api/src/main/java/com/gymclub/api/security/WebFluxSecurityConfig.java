@@ -1,18 +1,21 @@
 package com.gymclub.api.security;
 
+import com.gymclub.api.security.authorize.MyGrantedAuthoritiesExcutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrations;
 import org.springframework.security.oauth2.client.registration.InMemoryReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizationCodeAuthenticationTokenConverter;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -30,20 +33,10 @@ import reactor.core.publisher.Mono;
 @EnableReactiveMethodSecurity
 public class WebFluxSecurityConfig {
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private ReactiveAuthenticationManager authenticationManager;
 
     @Autowired
-    private ServerAuthenticationSuccessHandler formLoginSuccessAuthenticationhandler;
-
-    @Bean
-    ReactiveClientRegistrationRepository clientRegistrations() {
-        ClientRegistration clientRegistration = ClientRegistrations
-                .fromOidcIssuerLocation("https://idp.example.com/auth/realms/demo")
-                .clientId("de87e995aa6c1c726646")
-                .clientSecret("5e0aadf8a2b9203e318fc2b4e938862d255efbea")
-                .build();
-        return new InMemoryReactiveClientRegistrationRepository(clientRegistration);
-    }
+    private ServerAuthenticationSuccessHandler serverAuthenticationSuccessHandler;
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
@@ -58,26 +51,25 @@ public class WebFluxSecurityConfig {
 
         // ...
         http.formLogin()
-                .loginPage("/login")
+                //.loginPage("/login")
                 .authenticationFailureHandler((exchange, exception) -> Mono.error(exception))
-                .authenticationSuccessHandler(formLoginSuccessAuthenticationhandler);
+                .authenticationSuccessHandler(serverAuthenticationSuccessHandler);
 
 
         http
                 .oauth2Login()
-                .authenticationConverter(converter)
+                .authenticationConverter(new ServerOAuth2AuthorizationCodeAuthenticationTokenConverter(clientRegistrations()))
                 .authenticationManager(authenticationManager)
-                .authorizedClientRepository(authorizedClients)
-                .clientRegistrationRepository(clientRegistrations);
+                .clientRegistrationRepository(clientRegistrations());
 
         http
                 .oauth2ResourceServer()
-                .jwt();
+                .jwt().jwtAuthenticationConverter(grantedAuthoritiesExtractor());
         return http.build();
     }
 
     Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
-        GrantedAuthoritiesExtractor extractor = new GrantedAuthoritiesExtractor();
+        MyGrantedAuthoritiesExcutor extractor = new MyGrantedAuthoritiesExcutor();
         return new ReactiveJwtAuthenticationConverterAdapter(extractor);
     }
 
@@ -96,5 +88,22 @@ public class WebFluxSecurityConfig {
         bean.setOrder(0);
 
         return new CorsFilter(source);
+    }
+
+    @Bean
+    ReactiveClientRegistrationRepository clientRegistrations() {
+        ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("github")
+                .clientId("de87e995aa6c1c726646")
+                .clientSecret("5e0aadf8a2b9203e318fc2b4e938862d255efbea")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationUri("https://github.com/login/oauth/authorize")
+                .scope("user")
+                .tokenUri("https://github.com/login/oauth/access_token")
+                .redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
+                .userInfoUri("https://api.github.com/user")
+                .userNameAttributeName("login")
+                .build();
+        return new InMemoryReactiveClientRegistrationRepository(clientRegistration);
     }
 }

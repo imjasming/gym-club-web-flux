@@ -1,14 +1,14 @@
 package com.gymclub.api.controller;
 
-import com.gymclub.api.security.bo.MyUserDetails;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.ReactiveSecurityContextHolder;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Xiaoming.
@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class LoginHandler {
-    public Mono<MyUserDetails> login(ServerWebExchange exchange) {
+/*    public Mono<MyUserDetails> login(ServerWebExchange exchange) {
 
         return ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication)
@@ -30,5 +30,18 @@ public class LoginHandler {
     private Mono<UserDetails> addTokenHeader(ServerHttpResponse response, MyUserDetails userDetails) {
 
         return null;
+    }*/
+
+    /**
+     * response OAuth clients(is only github now)
+     * @param request
+     * @return a client list
+     */
+    public Mono<ServerResponse> getOAuthClient(ServerRequest request) {
+        Map client = new HashMap();
+        client.put("clientName", "Auth with Github");
+        client.put("clientUrl", "https://github.com/login/oauth/authorize?client_id=de87e995aa6c1c726646&state=github");
+
+        return ServerResponse.ok().body(Mono.just(Collections.singletonList(client)), List.class);
     }
 }

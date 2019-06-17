@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface UserRepository extends ReactiveMongoRepository<UmUser, Integer>, ReactiveCrudRepository<UmUser, Integer> {
 
+    boolean existsByUsername(String username);
     Mono<UmUser> findByUsername(String username);
 
     Flux<UmUser> findAllByUsername(String username);
