@@ -11,7 +11,10 @@
 # 项目结构  
 ```
 .
-src
+├─gym-club-api ------- 本次作业所有功能实现，包括api和security（ form login 和 OAuth）
+└─gym-club-auth ------ 欲使用spring social + webFlux，比较完整和复杂，但没调通，但上面的模块够了
+.
+gym-club-api.src
 ├─main
 │  ├─java
 │  │  └─com
