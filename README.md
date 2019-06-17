@@ -3,8 +3,9 @@
 > servlet版本[gym-club](https://github.com/imjasming/jee-ex-gym-club-system)
 > Gym Club 项目为前后端分离项目，前端项目`jee-ex-gym-club-system-web`地址：[gym-club-system-web](https://github.com/imjasming/jee-ex-gym-club-system-web)  
 # 项目介绍  
-本项目为【Java EE课程作业】后端项目，基于反应式的 Spring Boot + Spring Security 实现
+本项目为【Java EE课程作业】后端项目，基于反应式的 Spring Boot + Spring Security 实现；
 详细见[设计文档]()
+[security细节](https://github.com/imjasming/gym-club-web-flux/tree/master#security)
 ## 项目团队
 张小明（16301026），程威（16301032）
 # 项目结构  
@@ -138,4 +139,4 @@ src
 ## 2. OAuth：
 自定义提供了 Converter，AuthenticationManager，和 CLientRegistrationRepository，Token 也为JWT。ClientRegistrationRepository 是以  
 inMemory 方式提供 client。登录流程为前端获取server提供的第三方登录url后，请求 code，再将 code POST 到 server，交由 spring security 处理  
-< OAuth登录接口：{baseUrl}/login/oauth2/code/{registrationId}
+< OAuth登录接口：POST {baseUrl}/login/oauth2/code/{registrationId}，如：POST 127.0.0.1:8000/login/oauth2/code/github?code=
