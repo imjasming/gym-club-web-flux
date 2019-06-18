@@ -1,6 +1,7 @@
 package com.gymclub.api.security;
 
 import com.gymclub.api.security.authorize.MyGrantedAuthoritiesExcutor;
+import com.gymclub.api.security.bo.OAuthClientDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,9 @@ import org.springframework.security.oauth2.client.web.server.ServerOAuth2Authori
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.InMemoryClientDetailsService;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
@@ -24,6 +28,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import reactor.core.publisher.Mono;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Xiaoming.
@@ -109,5 +116,18 @@ public class WebFluxSecurityConfig {
                 .userNameAttributeName("login")
                 .build();
         return new InMemoryReactiveClientRegistrationRepository(clientRegistration);
+    }
+
+    @Bean
+    public ClientDetailsService clientDetailsService(){
+        OauthClient client = OauthClientBuilder.anOauthClient()
+                .withClientId("app").withClientSecret("app").withAuthorities("password,authorization_code,refresh_token").withScope("all").build();
+        InMemoryClientDetailsService clientDetailsService = new InMemoryClientDetailsService();
+        ClientDetails app = new OAuthClientDetails(client);
+        Map<String, ClientDetails> store = new HashMap<>();
+        store.put("app", app);
+        clientDetailsService.setClientDetailsStore(store);
+
+        return clientDetailsService;
     }
 }
