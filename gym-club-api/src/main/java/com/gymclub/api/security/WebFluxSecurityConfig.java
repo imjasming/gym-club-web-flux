@@ -46,7 +46,7 @@ public class WebFluxSecurityConfig {
 
         http
                 .authorizeExchange()
-                .pathMatchers("/auth/**", "/login", "/sign-up").permitAll()
+                .pathMatchers("/auth/**", "/login/**", "/register","/oauth2-client").permitAll()
                 .anyExchange().authenticated();
 
         // ...
