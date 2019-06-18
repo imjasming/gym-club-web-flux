@@ -14,6 +14,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @Configuration
 public class Routers {
     @Bean
+    public RouterFunction<ServerResponse> authRoute(LoginHandler handler){
+        return RouterFunctions.route().GET("/oauth2-client", handler::getOAuthClient).build();
+    }
+    @Bean
     public RouterFunction<ServerResponse> signUp(UserSignUpHandler handler) {
         return RouterFunctions.route()
                 .POST("/register", handler::signUp).build();
