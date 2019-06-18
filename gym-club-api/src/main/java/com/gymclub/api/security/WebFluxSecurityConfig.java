@@ -64,7 +64,7 @@ public class WebFluxSecurityConfig {
 
         http
                 .oauth2ResourceServer()
-                .jwt().jwtAuthenticationConverter(grantedAuthoritiesExtractor());
+                .jwt();
         return http.build();
     }
 
@@ -90,6 +90,10 @@ public class WebFluxSecurityConfig {
         return new CorsFilter(source);
     }
 
+    /**
+     * registry oauth clients in a in-memory approach
+     * @return
+     */
     @Bean
     ReactiveClientRegistrationRepository clientRegistrations() {
         ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("github")
