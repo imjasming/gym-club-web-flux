@@ -69,7 +69,7 @@ gym-club-api.src
 │  │              │              TrainerResourceAssembler.java
 │  │              │              UserResourceAssembler.java
 │  │              │              
-│  │              ├─repository ---------------------------------------- MongoDB数据访问对象
+│  │              ├─repository ---------------------------------------- 【MongoDB数据访问对象】
 │  │              │  │  EquipmentRepository.java
 │  │              │  │  GymRepository.java
 │  │              │  │  MyRoleRepository.java
@@ -77,9 +77,9 @@ gym-club-api.src
 │  │              │  │  UserInfoRepository.java
 │  │              │  │  UserRepository.java
 │  │              │  │  
-│  │              ├─router ------------------------------------------- webFlux路由配置类
+│  │              ├─router ------------------------------------------- 【webFlux路由配置类】
 │  │              │      HateoasRouter.java
-│  │              │      Routers.java -------------------------------- 所有的api接口路由配置
+│  │              │      Routers.java -------------------------------- 【所有的api接口路由配置】
 │  │              │      TrainerRouter.java
 │  │              │      UserInfoRouter.java
 │  │              │      
