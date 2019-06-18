@@ -11,7 +11,10 @@
 # 项目结构  
 ```
 .
-src
+├─gym-club-api ------- 本次作业所有功能实现，包括api和security（ form login 和 OAuth）
+└─gym-club-auth ------ 欲使用spring social + webFlux，比较完整和复杂，但没调通，但上面的模块够了
+.
+gym-club-api.src
 ├─main
 │  ├─java
 │  │  └─com
@@ -133,11 +136,9 @@ src
 ```
 # Security  
 ## 1. form login（表单登录）：  
-UsernamePassword 形式，完全交由 spring security 认证，只是提供了 UserDetailsService 供获取 UserDetails，和认证后处理器 LoginAuthenticationSuccessHandler  
-以 JWT 形式返回 Token( OAuthAccessToken)  
+UsernamePassword 形式，完全交由 spring security 认证，只是提供了 UserDetailsService 供获取 UserDetails，和认证后处理器LoginAuthenticationSuccessHandler，以 JWT 形式返回 Token( OAuthAccessToken)  
 > 表单登录接口： POST /login, 
 ## 2. OAuth：
-自定义提供了 Converter，AuthenticationManager，和 CLientRegistrationRepository，Token 也为JWT。ClientRegistrationRepository 是以  
-inMemory 方式提供 client。登录流程为前端获取server提供的第三方登录url后，请求 code，再将 code POST 到 server，交由 spring security 处理  
+自定义提供了 Converter，AuthenticationManager，和 CLientRegistrationRepository，Token 也为JWT。ClientRegistrationRepository 是以 inMemory 方式提供 client。登录流程为前端获取server提供的第三方登录url后，请求 code，再将 code POST 到 server，交由 spring security 处理  
 > OAuth登录接口：POST {baseUrl}/login/oauth2/code/{registrationId}，  
 > 如：POST 127.0.0.1:8000/login/oauth2/code/github?code=
