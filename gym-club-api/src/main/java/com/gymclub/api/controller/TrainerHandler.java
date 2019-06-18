@@ -1,5 +1,6 @@
 package com.gymclub.api.controller;
 
+import com.gymclub.api.annotation.RateLimitAspect;
 import com.gymclub.api.domain.Trainer;
 import com.gymclub.api.repository.TrainerRepository;
 import com.gymclub.api.service.DataService;
@@ -27,6 +28,7 @@ public class TrainerHandler {
     private TrainerRepository trainerRepository;
 
     @ApiOperation("show trainer's list in home page")
+    @RateLimitAspect
     public Mono<ServerResponse> getTrainerList(ServerRequest request) {
         final int pageNo = parseIntParam(request, "pageNo");
         final int pageSize = parseIntParam(request, "pageSize");
@@ -34,6 +36,7 @@ public class TrainerHandler {
     }
 
     @ApiOperation("user add a trainer")
+    @RateLimitAspect
     public Mono<ServerResponse> addUserSTrainer(ServerRequest request) {
         final String username = request.pathVariable("username");
         final int trainerId = parseIntParam(request, "trainerId");
@@ -43,6 +46,7 @@ public class TrainerHandler {
     }
 
     @ApiOperation("get user's trainer list")
+    @RateLimitAspect
     public Mono<ServerResponse> getUserTrainerList(ServerRequest request) {
         final String username = request.pathVariable("username");
         final Flux<Trainer> trainerList = dataService.getUserTrainers(username);

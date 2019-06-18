@@ -5,7 +5,7 @@ import com.gymclub.api.dto.UserSignUpRequest;
 import com.gymclub.api.service.UserSignUpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
  * Created on 2019/05/10 17:49.
  */
 @Slf4j
-@RestController
+@Component
 public class UserSignUpHandler {
     @Autowired
     private UserSignUpService userSignUpService;

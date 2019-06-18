@@ -1,5 +1,6 @@
 package com.gymclub.api.controller;
 
+import com.gymclub.api.annotation.RateLimitAspect;
 import com.gymclub.api.domain.Gym;
 import com.gymclub.api.repository.GymRepository;
 import io.swagger.annotations.Api;
@@ -25,6 +26,7 @@ public class GymHandler {
     }
 
     @ApiOperation("in home page, list gyms info")
+    @RateLimitAspect(permitsPerSecond = 10)
     public Mono<ServerResponse> getGymList(ServerRequest request) {
         final int pageNo = parseIntParam(request, "pageNo");
         final int pageSize = parseIntParam(request, "pageSize");
