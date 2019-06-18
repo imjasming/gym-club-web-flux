@@ -136,7 +136,7 @@ gym-club-api.src
 ```
 # Security  
 ## 1. form login（表单登录）：  
-UsernamePassword 形式，完全交由 spring security 认证，只是提供了 UserDetailsService 供获取 UserDetails，和认证后处理器LoginAuthenticationSuccessHandler，以 JWT 形式返回 Token( OAuthAccessToken)  
+UsernamePassword 形式，完全交由 spring security 认证，只是提供了 UserDetailsService 供获取 UserDetails，和认证后处理器[LoginAuthenticationSuccessHandler](https://github.com/imjasming/gym-club-web-flux/tree/master/gym-club-api/src/main/java/com/gymclub/api/security/handler)，以 JWT 形式返回 Token( OAuthAccessToken)  
 > 表单登录接口： POST /login, 
 ## 2. OAuth：
 自定义提供了 Converter，AuthenticationManager，和 CLientRegistrationRepository，Token 也为JWT。ClientRegistrationRepository 是以 inMemory 方式提供 client。登录流程：前端 GET /oauth2-client 获取后端server提供的第三方登录url后，授权 gym-club 获取 code，再将 code POST 到 server，交由 spring security 处理，相关[配置代码](https://github.com/imjasming/gym-club-web-flux/blob/master/gym-club-api/src/main/java/com/gymclub/api/security/WebFluxSecurityConfig.java)，[security模块](https://github.com/imjasming/gym-club-web-flux/tree/master/gym-club-api/src/main/java/com/gymclub/api/security)   
