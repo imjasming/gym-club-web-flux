@@ -64,11 +64,11 @@ public class WebFluxSecurityConfig {
 
         http
                 .oauth2ResourceServer()
-                .jwt();
+                .jwt().jwtAuthenticationConverter(grantedAuthoritiesExtractor());
         return http.build();
     }
 
-    Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
+    private Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
         MyGrantedAuthoritiesExcutor extractor = new MyGrantedAuthoritiesExcutor();
         return new ReactiveJwtAuthenticationConverterAdapter(extractor);
     }
