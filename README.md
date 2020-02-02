@@ -7,7 +7,7 @@
 * 详细见[Assignment 4 设计文档](https://github.com/imjasming/gym-club-web-flux/blob/master/JaveEE%E7%AC%AC%E5%9B%9B%E6%AC%A1%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3.docx)...(鉴于与第二次 restful 的结构差不多，还不如直接看 README, （-_-））  
 * [security细节](https://github.com/imjasming/gym-club-web-flux#security)  
 ## 项目团队
-张小明（16301026），程威（16301032)，那涛（16301043）
+张小明，程威，那涛
 # 项目结构  
 ```
 .
